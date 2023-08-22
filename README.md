@@ -21,6 +21,6 @@ other regions)
 
 Resources: Dataset available at: 
 
-Executive Summary: 
+Executive Summary: https://github.com/palkast/Client-Spending-Pattern-segmentation/blob/main/Executive_Summary.pdf
 
-Technical Document: 
+Technical Document: https://github.com/palkast/Client-Spending-Pattern-segmentation/blob/main/Technical_Document.pdf
