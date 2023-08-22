@@ -19,7 +19,7 @@ other regions)
 7)Detergents -Paper Annual spending on detergents and paper products.
 8)Delicatessen -Annual spending on deli products.
 
-Resources: Dataset available at: 
+Resources: Dataset available at: https://www.kaggle.com/datasets/binovi/wholesale-customers-data-set
 
 Executive Summary: https://github.com/palkast/Client-Spending-Pattern-segmentation/blob/main/Executive_Summary.pdf
 
