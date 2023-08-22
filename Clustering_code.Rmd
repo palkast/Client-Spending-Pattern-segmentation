@@ -1,0 +1,82 @@
+---
+title: "Group Part"
+output: pdf_document
+date: "2023-06-23"
+---
+
+```{r, message=FALSE,warning=FALSE}
+library(stats)
+library(dplyr)
+library(cluster)
+library(ggplot2)
+```
+
+# HW1 Group Part
+## Question5
+
+```{r}
+Wholesale_customers = read.csv("Wholesale customers data.csv")
+```
+
+Normalize the data
+```{r}
+normalize = function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+
+## just adding new columns 
+Wholesale_customers_normalized = Wholesale_customers %>% 
+  mutate_at(c(3:8), normalize)
+```
+
+Euclidean Distance method
+```{r}
+distance_matrix = dist(Wholesale_customers_normalized[,3:8], method = "euclidean")
+## View(as.matrix(distance_matrix))
+```
+
+Ward's method 
+```{r}
+hierarchical_ward = hclust(distance_matrix, method = "ward.D")
+plot(hierarchical_ward, labels = Wholesale_customers_normalized$Name)
+```
+
+### k = 7 (other choice?)
+```{r}
+plot(hierarchical_ward)
+rect.hclust(hierarchical_ward, k = 4) 
+```
+
+###  showing the 4-cluster solution!
+```{r}
+Wholesale_customers_normalized$cluster = cutree(hierarchical_ward, k = 4)
+# let's check out cluster centroids
+Wholesale_customers_normalized %>% group_by(cluster) %>%
+  summarise_at(c(3:8), mean)
+
+```
+
+```{r}
+write.csv(Wholesale_customers_normalized, "Wholesale_customers_normalized.csv", row.names=FALSE)
+```
+apply K-Means Clustering
+```{r}
+
+kcluster = kmeans(Wholesale_customers_normalized[,1:8], centers = 4)
+kcluster$centers
+```
+
+
+```{r}
+
+SSE_curve <- c() ## empty factor to store the data below
+for (n in 1:10) {
+  kcluster = kmeans(Wholesale_customers_normalized[,3:8], n)
+  sse = kcluster$tot.withinss
+  SSE_curve[n] = sse}
+  # or SSE_curve = c(SSE_curve, kcluster$tot.withinss)
+
+# plot SSE against number of clusters
+plot(1:10, SSE_curve, type = "b")
+
+```
